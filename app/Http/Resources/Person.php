@@ -34,7 +34,7 @@ class Person extends JsonResource
     $interval = array_intersect_key(json_decode(json_encode($interval), true), [ 'y' => '', 'm' => '', 'd' => '', 'h' => '', 'i' => '', 's' => '']);
 
     return [
-      'id' => $this->id,
+      // 'id' => $this->id,
       'name' => $this->name,
       'birthdate' => $this->birthdate,
       'timezone' => $this->timezone,

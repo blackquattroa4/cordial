@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 class SimpleTest extends TestCase
 {
 
-    // listing URL, expect 200 & appropriate json-structure
+    // Person list retrieval, expect 200 & appropriate json-structure
     public function test_the_application_with_list_retrieval()
     {
         $this->json('get', '/person')
@@ -37,7 +37,7 @@ class SimpleTest extends TestCase
           ]);
     }
 
-    // create URL, expect 422 & error-message
+    // create Person, expect 422 & error-message
     public function test_the_application_with_invalid_input_on_create()
     {
         // missing all required field
