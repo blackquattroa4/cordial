@@ -1,0 +1,45 @@
+version: '3.5'
+
+services:
+  cordial-interview:
+    build:
+      context: '.'
+      args:
+        uid: ${UID}
+    container_name: cordial-interview
+    environment:
+      - APACHE_RUN_USER=#${UID}
+      - APACHE_RUN_GROUP=#${UID}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8001:80
+    networks:
+      backend:
+        aliases:
+          - cordial-interview
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - mongodb_data_container:/storage/mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: cordial
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    command: mongod
+    networks:
+      backend:
+        aliases:
+          - mongo
+
+networks:
+  backend:
+    name: backend-network
+
+volumes:
+    mongodb_data_container:
