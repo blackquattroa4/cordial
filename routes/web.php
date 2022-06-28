@@ -25,7 +25,7 @@ $router->group(['prefix' => 'person'], function() use ($router) {
   //  POST /person
   $router->post('', ['uses' => 'PersonController@create', 'middleware' => [ 'person:create' ]]);
 
-  $router->group(['prefix' => '{id}'], function() use ($router) {
+  $router->group(['prefix' => '{person}'], function() use ($router) {
 
     //  POST /person/{id}
     $router->post('', ['uses' => 'PersonController@update', 'middleware' => [ 'person:update' ]]);

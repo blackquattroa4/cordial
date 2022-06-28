@@ -25,6 +25,10 @@ $app = new Laravel\Lumen\Application(
 
 $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 
+$app->register(\Anik\Form\FormRequestServiceProvider::class);
+
+$app->register(App\Providers\RouteBindingServiceProvider::class);
+
 $app->withFacades();
 
 $app->withEloquent();

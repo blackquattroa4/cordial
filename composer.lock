@@ -4,8 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1645b7bb05246af79bace6a8f411ac59",
+    "content-hash": "031d2163727ca89d376168628102ecbd",
     "packages": [
+        {
+            "name": "anik/form-request",
+            "version": "v4.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ssi-anik/form-request.git",
+                "reference": "6a6a1807eeb6705a5f0afaa7e4c52043e9a7c3f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ssi-anik/form-request/zipball/6a6a1807eeb6705a5f0afaa7e4c52043e9a7c3f6",
+                "reference": "6a6a1807eeb6705a5f0afaa7e4c52043e9a7c3f6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "anik/testbench-lumen": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Anik\\Form\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Syed Sirajul Islam Anik",
+                    "email": "sirajul.islam.anik@gmail.com"
+                }
+            ],
+            "description": "Form request is a package for Lumen that lets developer validate form requests like Laravel does.",
+            "keywords": [
+                "form-request",
+                "lumen",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/ssi-anik/form-request/issues",
+                "source": "https://github.com/ssi-anik/form-request/tree/v4.5"
+            },
+            "time": "2022-05-10T06:37:37+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.9.3",
@@ -2276,6 +2325,62 @@
                 "source": "https://github.com/laravel/serializable-closure"
             },
             "time": "2022-05-16T17:09:47+00:00"
+        },
+        {
+            "name": "mmghv/lumen-route-binding",
+            "version": "1.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mmghv/lumen-route-binding.git",
+                "reference": "4bd5545c1f508fcd92e889b5f694c6af27b1dca2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mmghv/lumen-route-binding/zipball/4bd5545c1f508fcd92e889b5f694c6af27b1dca2",
+                "reference": "4bd5545c1f508fcd92e889b5f694c6af27b1dca2",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/lumen-framework": "5 - 9",
+                "nikic/fast-route": ">=0.4 <2.0",
+                "php": "~7.1|~8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~7.2.0|~8.0|~9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "mmghv\\LumenRouteBinding\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohamed Gharib",
+                    "email": "mmghv@coddest.com"
+                }
+            ],
+            "description": "Route model binding for Lumen",
+            "homepage": "https://github.com/mmghv/lumen-route-binding",
+            "keywords": [
+                "bind",
+                "binding",
+                "fast-route",
+                "lumen",
+                "model",
+                "route",
+                "route model binding"
+            ],
+            "support": {
+                "issues": "https://github.com/mmghv/lumen-route-binding/issues",
+                "source": "https://github.com/mmghv/lumen-route-binding/tree/1.5.3"
+            },
+            "time": "2022-03-06T15:12:15+00:00"
         },
         {
             "name": "mongodb/mongodb",

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Http;
 
@@ -44,17 +43,21 @@ class SimpleTest extends TestCase
         $this->json('post', '/person', [ 'name' => '', 'birthdate' => '', 'timezone' => '' ])
           ->seeStatusCode(422)
           ->seeJsonStructure([
-            'name' => [ ],
-            'birthdate' => [ ],
-            'timezone' => [ ],
+            'errors' => [
+              'name' => [ ],
+              'birthdate' => [ ],
+              'timezone' => [ ],
+            ]
           ]);
 
         // missing some required field
         $this->json('post', '/person', [ 'name' => 'Jack Sparrow', 'birthdate' => '', 'timezone' => '' ])
           ->seeStatusCode(422)
           ->seeJsonStructure([
-            'birthdate' => [ ],
-            'timezone' => [ ],
+            'errors' => [
+              'birthdate' => [ ],
+              'timezone' => [ ],
+            ]
           ])
           ->seeJsonDoesntContains([
             'name'
@@ -63,7 +66,9 @@ class SimpleTest extends TestCase
         $this->json('post', '/person', [ 'name' => 'Jack Sparrow', 'birthdate' => '', 'timezone' => 'America/Los_Angeles' ])
           ->seeStatusCode(422)
           ->seeJsonStructure([
-            'birthdate' => [ ],
+            'errors' => [
+              'birthdate' => [ ],
+            ]
           ])
           ->seeJsonDoesntContains([
             'name',
@@ -74,15 +79,17 @@ class SimpleTest extends TestCase
         $this->json('post', '/person', [ 'name' => 'Jack Sparrow', 'birthdate' => '2-5', 'timezone' => 'abc' ])
           ->seeStatusCode(422)
           ->seeJsonStructure([
-            'birthdate' => [ ],
-            'timezone' => [ ],
+            'errors' => [
+              'birthdate' => [ ],
+              'timezone' => [ ],
+            ]
           ])
           ->seeJsonDoesntContains([
             'name'
           ]);
 
         // successful creation
-        $this->json('post', '/person', [ 'name' => 'Jack Sparrow', 'birthdate' => '2008-02-05', 'timezone' => 'America/Los_Angeles' ])
+        $response = $this->json('post', '/person', [ 'name' => 'Jack Sparrow', 'birthdate' => '2008-02-05', 'timezone' => 'America/Los_Angeles' ])
           ->seeStatusCode(200)
           ->seeJsonStructure([
             'data' => [
@@ -102,21 +109,50 @@ class SimpleTest extends TestCase
               ],
               'message',
             ]
-          ]);
+          ])->response;
 
         // duplicate creation
         $this->json('post', '/person', [ 'name' => 'Jack Sparrow', 'birthdate' => '2008-02-05', 'timezone' => 'America/Los_Angeles' ])
           ->seeStatusCode(422)
           ->seeJsonStructure([
-            'name' => [ ],
-            'birthdate' => [ ],
-            'timezone' => [ ],
+            'errors' => [
+              'name' => [ ],
+              'birthdate' => [ ],
+              'timezone' => [ ],
+            ]
           ]);
+
+        // delete created entry
+        $this->json('delete', '/person/' . json_decode($response->getContent())->data->id)
+          ->seeStatusCode(200);
     }
 
     // verify content correctness
     public function test_the_application_with_correct_content()
     {
+        // create test data
+        $response = $this->json('post', '/person', [ 'name' => 'Jack Sparrow', 'birthdate' => '2008-02-05', 'timezone' => 'America/Los_Angeles' ])
+          ->seeStatusCode(200)
+          ->seeJsonStructure([
+            'data' => [
+              // 'id',
+              'name',
+              'birthdate',
+              'timezone',
+              'isBirthday',
+              'interval' => [
+                'y',
+                'm',
+                'd',
+                'h',
+                'i',
+                's',
+                '_comment',
+              ],
+              'message',
+            ]
+          ])->response;
+
         $this->json('get', '/person', [ 'timestamp' => strtotime("2013-03-25") ])
           ->seeStatusCode(200)
           ->seeJsonContains([
@@ -156,6 +192,10 @@ class SimpleTest extends TestCase
                 ],
                 'message' => 'Jack Sparrow is 5 years old today (4 hours remaining in America/Los_Angeles)',
           ]);
+
+        // delete created entry
+        $this->json('delete', '/person/' . json_decode($response->getContent())->data->id)
+          ->seeStatusCode(200);
     }
 
 
